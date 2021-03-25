@@ -7,14 +7,14 @@ import java.util.List;
 
 public class Baraja {
 
-    public void crearBaraja() {
+    private List<Carta> baraja = new ArrayList<>();
+
+    public List<Carta> crearBaraja() {
         List<Palos> palos = new ArrayList<>();
         palos.add(Palos.OROS);
         palos.add(Palos.BASTOS);
         palos.add(Palos.COPAS);
         palos.add(Palos.ESPADAS);
-
-        List<Carta> baraja = new ArrayList<>();
 
         for (Palos palo : palos) {
             for (int i = 1; i <= 12; i++) {
@@ -23,6 +23,8 @@ public class Baraja {
                 }
             }
         }
-
+        return baraja;
     }
+
+
 }

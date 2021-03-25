@@ -27,4 +27,9 @@ public class Carta {
     public void setPalo(Palos palo) {
         this.palo = palo;
     }
+
+    @Override
+    public String toString() {
+        return palo + " " + numeroCarta;
+    }
 }
