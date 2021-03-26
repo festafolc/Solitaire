@@ -33,18 +33,9 @@ public class Mesa {
         this.montonExterior = montonExterior;
     }
 
-    public void crearMesa(List baraja) {
-        Random randomObj = new Random();
-        List<Carta> cartasAleatorias = new ArrayList<>();
-        int cartaAleatoria;
-        Carta carta;
+    public void crearMesa(Baraja baraja) {
 
-        for(int i = 0; i < 40; i++) {
-                cartaAleatoria = randomObj.nextInt(40 - i);
-                carta = (Carta) baraja.get(cartaAleatoria);
-                cartasAleatorias.add(carta);
-                baraja.remove(cartaAleatoria);
-        }
+        List<Carta> barajaBarajada = baraja.barajarBaraja(baraja.crearBaraja());
 
         montonInterior = new Stack[filas][columnas];
         for (int i = 0; i < montonInterior.length; i++) {
@@ -59,24 +50,22 @@ public class Mesa {
                 for (int j = 0; j < montonInterior[i].length; j++) {
                     if (k == 1) {
                         if((i==0 && j==0) || (i==0 && j==3) || (i==1 && j==1) || (i==1 && j==2) || (i==2 && j==1) || (i==2 && j==2) || (i==3 && j==0) || (i==3 && j==3)) {
-                            montonInterior[i][j].push(cartasAleatorias.get(0));
-                            cartasAleatorias.remove(0);
+                            montonInterior[i][j].push(barajaBarajada.get(0));
+                            barajaBarajada.remove(0);
                         }
                     } else {
-                        montonInterior[i][j].push(cartasAleatorias.get(0));
-                        cartasAleatorias.remove(0);
+                        montonInterior[i][j].push(barajaBarajada.get(0));
+                        barajaBarajada.remove(0);
                     }
                 }
             }
             k++;
         }
 
-
         montonExterior = new Stack[columnas];
         for(int i = 0; i < columnas; i++) {
             montonExterior[i] = new Stack<>();
         }
-
     }
 
     public void mostrarMesa() {
@@ -84,16 +73,16 @@ public class Mesa {
             int k = 0;
             for (int j = 0; j < montonInterior[i].length; j++) {
                 if (k != 3) {
-                    System.out.print(montonInterior[i][j].toString() + "\t\t|\t\t");
+                    System.out.print(montonInterior[i][j].lastElement() + "\t\t|\t\t");
                 } else {
-                    System.out.print(montonInterior[i][j].toString() + "\n");
+                    System.out.print(montonInterior[i][j].lastElement() + "\n");
                 }
                 k++;
             }
         }
-        System.out.println("....................................................");
+        System.out.println("........................................................................................................................................");
         for(int i = 0; i < columnas; i++) {
-            System.out.print(montonExterior[i].toString() + "\t\t\t\t");
+            System.out.print(montonExterior[i] + "\t\t\t\t");
         }
     }
 }

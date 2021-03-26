@@ -4,6 +4,7 @@ import org.cfm.solitaire.enums.Palos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Baraja {
 
@@ -26,5 +27,18 @@ public class Baraja {
         return baraja;
     }
 
+    public List<Carta> barajarBaraja(List baraja) {
+        Random randomObj = new Random();
+        List<Carta> cartasAleatorias = new ArrayList<>();
+        int cartaAleatoria;
+        Carta carta;
 
+        for(int i = 0; i < 40; i++) {
+            cartaAleatoria = randomObj.nextInt(40 - i);
+            carta = (Carta) baraja.get(cartaAleatoria);
+            cartasAleatorias.add(carta);
+            baraja.remove(cartaAleatoria);
+        }
+        return cartasAleatorias;
+    }
 }
