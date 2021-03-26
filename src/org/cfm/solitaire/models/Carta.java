@@ -7,6 +7,9 @@ public class Carta {
     private Palos palo;
     private int numeroCarta;
 
+    public Carta() {
+    }
+
     public Carta(Palos palo, int numeroCarta) {
         this.palo = palo;
         this.numeroCarta = numeroCarta;
@@ -26,6 +29,11 @@ public class Carta {
 
     public void setPalo(Palos palo) {
         this.palo = palo;
+    }
+
+    public Carta comprobarCarta (Palos palo, int numeroCarta) {
+        Carta carta = new Carta(palo, numeroCarta);
+        return carta;
     }
 
     @Override

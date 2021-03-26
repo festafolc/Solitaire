@@ -49,7 +49,7 @@ public class Mesa {
             for (int i = 0; i < montonInterior.length; i++) {
                 for (int j = 0; j < montonInterior[i].length; j++) {
                     if (k == 1) {
-                        if((i==0 && j==0) || (i==0 && j==3) || (i==1 && j==1) || (i==1 && j==2) || (i==2 && j==1) || (i==2 && j==2) || (i==3 && j==0) || (i==3 && j==3)) {
+                        if((i==j) || (i==0 && j==3) || (i==1 && j==2) || (i==2 && j==1) || (i==3 && j==0)) {
                             montonInterior[i][j].push(barajaBarajada.get(0));
                             barajaBarajada.remove(0);
                         }
@@ -80,7 +80,9 @@ public class Mesa {
                 k++;
             }
         }
-        System.out.println("........................................................................................................................................");
+
+        System.out.println("...................................................................................");
+
         for(int i = 0; i < columnas; i++) {
             System.out.print(montonExterior[i] + "\t\t\t\t");
         }
