@@ -39,7 +39,7 @@ public class Mesa {
         int cartaAleatoria;
         Carta carta;
 
-        for(int i = 0; i < 16; i++) {
+        for(int i = 0; i < 40; i++) {
                 cartaAleatoria = randomObj.nextInt(40 - i);
                 carta = (Carta) baraja.get(cartaAleatoria);
                 cartasAleatorias.add(carta);
@@ -50,10 +50,27 @@ public class Mesa {
         for (int i = 0; i < montonInterior.length; i++) {
             for (int j = 0; j < montonInterior[i].length; j++) {
                 montonInterior[i][j] = new Stack<>();
-                montonInterior[i][j].push(cartasAleatorias.get(0));
-                cartasAleatorias.remove(0);
             }
         }
+
+        int k = 0;
+        for (int x = 0; x < 3; x++) {
+            for (int i = 0; i < montonInterior.length; i++) {
+                for (int j = 0; j < montonInterior[i].length; j++) {
+                    if (k == 1) {
+                        if((i==0 && j==0) || (i==0 && j==3) || (i==1 && j==1) || (i==1 && j==2) || (i==2 && j==1) || (i==2 && j==2) || (i==3 && j==0) || (i==3 && j==3)) {
+                            montonInterior[i][j].push(cartasAleatorias.get(0));
+                            cartasAleatorias.remove(0);
+                        }
+                    } else {
+                        montonInterior[i][j].push(cartasAleatorias.get(0));
+                        cartasAleatorias.remove(0);
+                    }
+                }
+            }
+            k++;
+        }
+
 
         montonExterior = new Stack[columnas];
         for(int i = 0; i < columnas; i++) {
