@@ -39,6 +39,7 @@ public class Jugador {
             }
         }
 
+        salir:
         if (!movimiento1) {
             for (Carta cartaEncima : cartasInterior) {
                 if (cartaEncima.getPalo() == Palos.BASTOS) {
@@ -60,29 +61,87 @@ public class Jugador {
                 min = (cartasBastos.get(min).getNumeroCarta() < cartasBastos.get(i).getNumeroCarta()) ? min : i;
                 if (min == cartasExterior.get(0).getNumeroCarta() + 1) {
                     movimiento = true;
+                    break salir;
                 }
+            }
+            min = 0;
+            for (int i = 1; i < cartasCopas.size(); i++) {
                 min = (cartasCopas.get(min).getNumeroCarta() < cartasCopas.get(i).getNumeroCarta()) ? min : i;
                 if (min == cartasExterior.get(1).getNumeroCarta() + 1) {
                     movimiento = true;
+                    break salir;
                 }
+            }
+            min = 0;
+            for (int i = 1; i < cartasEspadas.size(); i++) {
                 min = (cartasEspadas.get(min).getNumeroCarta() < cartasEspadas.get(i).getNumeroCarta()) ? min : i;
                 if (min == cartasExterior.get(2).getNumeroCarta() + 1) {
                     movimiento = true;
+                    break salir;
                 }
+            }
+            min = 0;
+            for (int i = 1; i < cartasOros.size(); i++) {
                 min = (cartasOros.get(min).getNumeroCarta() < cartasOros.get(i).getNumeroCarta()) ? min : i;
                 if (min == cartasExterior.get(3).getNumeroCarta() + 1) {
                     movimiento = true;
+                    break salir;
                 }
             }
         }
 
-        //Verificar movimientos en el monto interior
+        //Verificar movimientos en el monto interior entre cartas
         if(!movimiento && !movimiento1) {
+            if(cartasBastos.size() > 1) {
+                for(int i = 0; i < cartasBastos.size(); i++) {
+                    if(i < cartasBastos.size()-1){
+                        int numero1 = cartasBastos.get(i).getNumeroCarta();
+                        int numero2 = cartasBastos.get(i+1).getNumeroCarta();
+                        if(Math.abs(numero1-numero2) == 1) {
+                            movimiento = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(cartasCopas.size() > 1) {
+                for(int i = 0; i < cartasCopas.size(); i++) {
+                    if(i < cartasBastos.size()-1){
+                        int numero1 = cartasCopas.get(i).getNumeroCarta();
+                        int numero2 = cartasCopas.get(i+1).getNumeroCarta();
+                        if(Math.abs(numero1-numero2) == 1) {
+                            movimiento = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(cartasEspadas.size() > 1) {
+                for(int i = 0; i < cartasEspadas.size(); i++) {
+                    if(i < cartasEspadas.size()-1){
+                        int numero1 = cartasEspadas.get(i).getNumeroCarta();
+                        int numero2 = cartasEspadas.get(i+1).getNumeroCarta();
+                        if(Math.abs(numero1-numero2) == 1) {
+                            movimiento = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(cartasOros.size() > 1) {
+                for(int i = 0; i < cartasOros.size(); i++) {
+                    if(i < cartasEspadas.size()-1){
+                        int numero1 = cartasOros.get(i).getNumeroCarta();
+                        int numero2 = cartasOros.get(i+1).getNumeroCarta();
+                        if(Math.abs(numero1-numero2) == 1) {
+                            movimiento = true;
+                            break;
+                        }
+                    }
+                }
+            }
 
         }
-
         return (movimiento1 || movimiento);
     }
-
-
 }
