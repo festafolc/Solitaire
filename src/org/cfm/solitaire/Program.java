@@ -5,6 +5,8 @@ import org.cfm.solitaire.models.Carta;
 import org.cfm.solitaire.models.Jugador;
 import org.cfm.solitaire.models.Mesa;
 
+import java.util.Scanner;
+
 public class Program {
     public static void main(String[] args) {
 
@@ -16,10 +18,19 @@ public class Program {
 
         Jugador jugadorClass = new Jugador();
 
+        Scanner sc = new Scanner(System.in);
+
         mesaClass.crearMesa(barajaClass);
         mesaClass.mostrarMesa();
 
-        jugadorClass.movimientoPosible(mesaClass, cartaClass);
+
+
+/*        while(jugadorClass.movimientoPosible(mesaClass, cartaClass)) {
+            //TODO
+        }
+
+        System.out.println("fin");*/
+
 
 
     }
