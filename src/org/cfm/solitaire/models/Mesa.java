@@ -1,8 +1,6 @@
 package org.cfm.solitaire.models;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Stack;
 
 public class Mesa {
@@ -86,5 +84,6 @@ public class Mesa {
         for(int i = 0; i < columnas; i++) {
             System.out.print(montonExterior[i] + "\t\t\t\t");
         }
+        System.out.println();
     }
 }

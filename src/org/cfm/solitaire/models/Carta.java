@@ -2,6 +2,8 @@ package org.cfm.solitaire.models;
 
 import org.cfm.solitaire.enums.Palos;
 
+import java.util.Stack;
+
 public class Carta {
 
     private Palos palo;
@@ -34,6 +36,11 @@ public class Carta {
     public Carta comprobarCarta (Palos palo, int numeroCarta) {
         Carta carta = new Carta(palo, numeroCarta);
         return carta;
+    }
+
+    public Stack<Carta> seleccionarCarta(Mesa mesa, int fila, int columna) {
+        Stack<Carta>[][] cartas = mesa.getMontonInterior();
+        return cartas[fila][columna];
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Stack;
 
 public class Jugador {
 
-    public boolean movimientoPosible(Mesa mesa, Carta carta) {
+    public boolean movimientoPosible(Mesa mesa) {
 
         boolean movimiento1 = false;
         boolean movimiento = false;
@@ -22,10 +22,6 @@ public class Jugador {
         List<Carta> cartasEspadas = new ArrayList<>();
         List<Carta> cartasOros = new ArrayList<>();
 
-
-        for (Stack<Carta> cartaExterior : mesaExterior) {
-            cartasExterior.add(cartaExterior.lastElement());
-        }
 
         buscar:
         for (Stack<Carta>[] juego : mesaInterior) {
@@ -41,6 +37,12 @@ public class Jugador {
 
         salir:
         if (!movimiento1) {
+            for (Stack<Carta> cartaExterior : mesaExterior) {
+                if (cartaExterior.size() > 0) {
+                    cartasExterior.add(cartaExterior.lastElement());
+                }
+            }
+
             for (Carta cartaEncima : cartasInterior) {
                 if (cartaEncima.getPalo() == Palos.BASTOS) {
                     cartasBastos.add(cartaEncima);
@@ -57,35 +59,43 @@ public class Jugador {
             }
 
             int min = 0;
-            for (int i = 1; i < cartasBastos.size(); i++) { //Verificar si una carta del interior puede ir al exterior
-                min = (cartasBastos.get(min).getNumeroCarta() < cartasBastos.get(i).getNumeroCarta()) ? min : i;
-                if (min == cartasExterior.get(0).getNumeroCarta() + 1) {
-                    movimiento = true;
-                    break salir;
+            if(mesaExterior[0].size() > 0) {
+                for (int i = 1; i < cartasBastos.size(); i++) { //Verificar si una carta del interior puede ir al exterior
+                    min = (cartasBastos.get(min).getNumeroCarta() < cartasBastos.get(i).getNumeroCarta()) ? min : i;
+                    if (min == mesaExterior[0].lastElement().getNumeroCarta() + 1) {
+                        movimiento = true;
+                        break salir;
+                    }
                 }
             }
-            min = 0;
-            for (int i = 1; i < cartasCopas.size(); i++) {
-                min = (cartasCopas.get(min).getNumeroCarta() < cartasCopas.get(i).getNumeroCarta()) ? min : i;
-                if (min == cartasExterior.get(1).getNumeroCarta() + 1) {
-                    movimiento = true;
-                    break salir;
+            if(mesaExterior[1].size() > 0) {
+                min = 0;
+                for (int i = 1; i < cartasCopas.size(); i++) {
+                    min = (cartasCopas.get(min).getNumeroCarta() < cartasCopas.get(i).getNumeroCarta()) ? min : i;
+                    if (min == mesaExterior[1].lastElement().getNumeroCarta() + 1) {
+                        movimiento = true;
+                        break salir;
+                    }
                 }
             }
-            min = 0;
-            for (int i = 1; i < cartasEspadas.size(); i++) {
-                min = (cartasEspadas.get(min).getNumeroCarta() < cartasEspadas.get(i).getNumeroCarta()) ? min : i;
-                if (min == cartasExterior.get(2).getNumeroCarta() + 1) {
-                    movimiento = true;
-                    break salir;
+            if(mesaExterior[2].size() > 0) {
+                min = 0;
+                for (int i = 1; i < cartasEspadas.size(); i++) {
+                    min = (cartasEspadas.get(min).getNumeroCarta() < cartasEspadas.get(i).getNumeroCarta()) ? min : i;
+                    if (min == mesaExterior[2].lastElement().getNumeroCarta() + 1) {
+                        movimiento = true;
+                        break salir;
+                    }
                 }
             }
-            min = 0;
-            for (int i = 1; i < cartasOros.size(); i++) {
-                min = (cartasOros.get(min).getNumeroCarta() < cartasOros.get(i).getNumeroCarta()) ? min : i;
-                if (min == cartasExterior.get(3).getNumeroCarta() + 1) {
-                    movimiento = true;
-                    break salir;
+            if(mesaExterior[3].size() > 0) {
+                min = 0;
+                for (int i = 1; i < cartasOros.size(); i++) {
+                    min = (cartasOros.get(min).getNumeroCarta() < cartasOros.get(i).getNumeroCarta()) ? min : i;
+                    if (min == mesaExterior[3].lastElement().getNumeroCarta() + 1) {
+                        movimiento = true;
+                        break salir;
+                    }
                 }
             }
         }
@@ -140,7 +150,6 @@ public class Jugador {
                     }
                 }
             }
-
         }
         return (movimiento1 || movimiento);
     }
