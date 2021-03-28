@@ -26,12 +26,12 @@ public class Program {
             int columna = sc.nextInt();
             switch (mover) {
                 case 1:
-                    Carta cartaPop = cartaClass.seleccionarCarta(mesaClass, fila, columna).pop();
+                    Carta cartaPop = cartaClass.seleccionarMonton(mesaClass, fila, columna).lastElement();
                     fila = sc.nextInt();
                     columna = sc.nextInt();
-                    cartaClass.seleccionarCarta(mesaClass, fila, columna).push(cartaPop);
+                    cartaClass.seleccionarMonton(mesaClass, fila, columna).push(cartaPop);
                 case 2:
-                    Carta cartaPeek = cartaClass.seleccionarCarta(mesaClass, fila, columna).lastElement();
+                    Carta cartaPeek = cartaClass.seleccionarMonton(mesaClass, fila, columna).lastElement();
                 default:
                     System.out.println("Seleccione una opción válida");
             }

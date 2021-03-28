@@ -33,14 +33,19 @@ public class Carta {
         this.palo = palo;
     }
 
-    public Carta comprobarCarta (Palos palo, int numeroCarta) {
-        Carta carta = new Carta(palo, numeroCarta);
-        return carta;
+    public Stack<Carta> seleccionarCarta(Mesa mesa, int indice) {
+        Stack<Carta>[] cartas = mesa.getMontonExterior();
+        return cartas[indice];
     }
 
-    public Stack<Carta> seleccionarCarta(Mesa mesa, int fila, int columna) {
-        Stack<Carta>[][] cartas = mesa.getMontonInterior();
-        return cartas[fila][columna];
+    public Stack<Carta> seleccionarMonton(Mesa mesa, int fila, int columna) {
+        if(fila == 5) {
+            Stack<Carta>[] cartas = mesa.getMontonExterior();
+            return cartas[columna];
+        } else {
+            Stack<Carta>[][] cartas = mesa.getMontonInterior();
+            return cartas[fila][columna];
+        }
     }
 
     @Override
