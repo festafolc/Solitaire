@@ -1,5 +1,6 @@
 package org.cfm.solitaire;
 
+import org.cfm.solitaire.enums.Palos;
 import org.cfm.solitaire.models.Baraja;
 import org.cfm.solitaire.models.Carta;
 import org.cfm.solitaire.models.Jugador;
