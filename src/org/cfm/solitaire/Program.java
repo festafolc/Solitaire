@@ -30,7 +30,7 @@ public class Program {
 
         while (jugadorClass.movimientoPosible(mesaClass)) {
             mesaClass.mostrarMesa();
-            System.out.print("Seleccione la primera carta (zona arriba): ");
+            System.out.print("Seleccione la primera carta: ");
             String[] carta = sc.next().split(",");
             int fila = Integer.parseInt(carta[0]);
             int columna = Integer.parseInt(carta[1]);
@@ -40,7 +40,7 @@ public class Program {
             fila = Integer.parseInt(carta[0]);
             columna = Integer.parseInt(carta[1]);
             Stack<Carta> monto2 = cartaClass.seleccionarMonton(mesaClass, fila, columna);
-            if (jugadorClass.comprobarMovimiento(mesaClass, monto1, monto2)) {
+            if (jugadorClass.comprobarMovimiento(monto1, monto2)) {
                 Carta cartaPop = monto1.pop();
                 monto2.push(cartaPop);
             } else {
