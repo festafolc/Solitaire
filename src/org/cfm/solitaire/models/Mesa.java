@@ -67,13 +67,22 @@ public class Mesa {
     }
 
     public void mostrarMesa() {
+        System.out.println("...................................................................................");
         for (int i = 0; i < montonInterior.length; i++) {
             int k = 0;
             for (int j = 0; j < montonInterior[i].length; j++) {
                 if (k != 3) {
-                    System.out.print(montonInterior[i][j].lastElement() + "\t\t|\t\t");
+                    if(montonInterior[i][j].size() > 0) {
+                        System.out.print(montonInterior[i][j].lastElement() + "\t\t|\t\t");
+                    } else {
+                        System.out.print(montonInterior[i][j] + "\t\t|\t\t");
+                    }
                 } else {
-                    System.out.print(montonInterior[i][j].lastElement() + "\n");
+                    if(montonInterior[i][j].size() > 0) {
+                        System.out.print(montonInterior[i][j].lastElement() + "\n");
+                    } else {
+                        System.out.print(montonInterior[i][j] + "\n");
+                    }
                 }
                 k++;
             }
@@ -82,7 +91,12 @@ public class Mesa {
         System.out.println("...................................................................................");
 
         for(int i = 0; i < columnas; i++) {
-            System.out.print(montonExterior[i] + "\t\t\t\t");
+            if(montonExterior[i].size() > 0) {
+                System.out.print(montonExterior[i].lastElement() + "\t\t\t\t");
+            } else {
+                System.out.print(montonExterior[i] + "\t\t\t\t");
+            }
+
         }
         System.out.println();
     }

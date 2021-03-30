@@ -4,38 +4,18 @@ import org.cfm.solitaire.enums.Palos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 public class Jugador {
 
-/*    public Palos encontrarPalo(Mesa mesa, Palos palo) {
-        Stack<Carta>[] mesaExterior = mesa.getMontonExterior();
-
-        for (Stack<Carta> palos : mesaExterior) {
-            if (palos.lastElement().getPalo().equals(Palos.BASTOS)) {
-                palo = Palos.BASTOS;
-                break;
-            } else if (palos.lastElement().getPalo().equals(Palos.COPAS)) {
-                palo = Palos.COPAS;
-                break;
-            } else if (palos.lastElement().getPalo().equals(Palos.ESPADAS)) {
-                palo = Palos.ESPADAS;
-                break;
-            } else if (palos.lastElement().getPalo().equals(Palos.OROS)){
-                palo = Palos.OROS;
-                break;
-            } else {
-                palo = null;
-            }
-        }
-        return palo;
-    }*/
-
     public List<Palos> encontrarPalo(Mesa mesa) {
         Stack<Carta>[] mesaExterior = mesa.getMontonExterior();
         List<Palos> palos = new ArrayList<>();
-        for(Stack<Carta> palo : mesaExterior) {
-            palos.add(palo.lastElement().getPalo());
+        for (Stack<Carta> palo : mesaExterior) {
+            if (palo.lastElement().getPalo() != null) {
+                palos.add(palo.lastElement().getPalo());
+            }
         }
         return palos;
     }
@@ -91,13 +71,17 @@ public class Jugador {
                     movimiento = true;
                     break salir;
                 }
-
-                if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.BASTOS)].size() > 0) {
-                    if (min == mesaExterior[0].lastElement().getNumeroCarta() + 1) {
-                        movimiento = true;
-                        break salir;
+                try {
+                    if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.BASTOS)].size() > 0) {
+                        if (min == mesaExterior[encontrarPalo(mesa).indexOf(Palos.BASTOS)].lastElement().getNumeroCarta() + 1) {
+                            movimiento = true;
+                            break salir;
+                        }
                     }
+                } catch (NoSuchElementException e) {
+                    continue;
                 }
+
             }
             min = 0;
             for (int i = 1; i < cartasCopas.size(); i++) {
@@ -106,11 +90,15 @@ public class Jugador {
                     movimiento = true;
                     break salir;
                 }
-                if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.COPAS)].size() > 0) {
-                    if (min == mesaExterior[1].lastElement().getNumeroCarta() + 1) {
-                        movimiento = true;
-                        break salir;
+                try {
+                    if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.COPAS)].size() > 0) {
+                        if (min == mesaExterior[encontrarPalo(mesa).indexOf(Palos.COPAS)].lastElement().getNumeroCarta() + 1) {
+                            movimiento = true;
+                            break salir;
+                        }
                     }
+                } catch (NoSuchElementException e) {
+                    continue;
                 }
             }
             min = 0;
@@ -120,12 +108,17 @@ public class Jugador {
                     movimiento = true;
                     break salir;
                 }
-                if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.ESPADAS)].size() > 0) {
-                    if (min == mesaExterior[2].lastElement().getNumeroCarta() + 1) {
-                        movimiento = true;
-                        break salir;
+                try {
+                    if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.ESPADAS)].size() > 0) {
+                        if (min == mesaExterior[encontrarPalo(mesa).indexOf(Palos.ESPADAS)].lastElement().getNumeroCarta() + 1) {
+                            movimiento = true;
+                            break salir;
+                        }
                     }
+                } catch (NoSuchElementException e) {
+                    continue;
                 }
+
             }
             min = 0;
             for (int i = 1; i < cartasOros.size(); i++) {
@@ -134,12 +127,17 @@ public class Jugador {
                     movimiento = true;
                     break salir;
                 }
-                if (mesaExterior[3].size() > 0) {
-                    if (min == mesaExterior[encontrarPalo(mesa).indexOf(Palos.OROS)].lastElement().getNumeroCarta() + 1) {
-                        movimiento = true;
-                        break salir;
+                try {
+                    if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.OROS)].size() > 0) {
+                        if (min == mesaExterior[encontrarPalo(mesa).indexOf(Palos.OROS)].lastElement().getNumeroCarta() + 1) {
+                            movimiento = true;
+                            break salir;
+                        }
                     }
+                } catch (NoSuchElementException e) {
+                    continue;
                 }
+
             }
 
         }
@@ -198,42 +196,27 @@ public class Jugador {
         return (movimiento1 || movimiento);
     }
 
-    public boolean comprobarMovimiento(Mesa mesa, Carta carta, int fila, int columna) {
+    public boolean comprobarMovimiento(Mesa mesa, Stack<Carta> monto1, Stack<Carta> monto2) {
 
         boolean mover = false;
 
-        Stack<Carta>[][] mesaInterior = mesa.getMontonInterior();
-        Stack<Carta>[] mesaExterior = mesa.getMontonExterior();
-
-        Stack<Carta> monto1 = carta.seleccionarMonton(mesa, fila, columna);
-        Stack<Carta> monto2 = carta.seleccionarMonton(mesa, fila, columna);
-
-        //Verificación movimiento del monto interior al exterior
         if (monto2.size() == 0) {
             if (monto1.lastElement().getNumeroCarta() == 1) {
                 mover = true;
-            } else {
-                System.out.println("Movimiento erróneo");
-            }
-        }
-        if (monto2.size() > 0) {
-            //Palos palo = encontrarPalo(mesa, monto2.lastElement().getPalo());
-            Palos palo = monto2.lastElement().getPalo();
-            if (monto1.lastElement().getPalo().equals(palo)) {
-                if (monto1.lastElement().getNumeroCarta() == monto2.lastElement().getNumeroCarta() + 1) {
-                    mover = true;
-                }
-            } else {
-                System.out.println("movimiento erróneo");
             }
         }
 
-        //Verificación movimiento en el monto interior
-        if (monto1.lastElement().getPalo() == monto2.lastElement().getPalo()) {
-            if (monto1.lastElement().getNumeroCarta() == monto2.lastElement().getNumeroCarta() - 1)
-                mover = true;
-        } else {
-            System.out.println("Movimiento erróneo");
+        if (monto2.size() > 0) {
+            if (monto1.lastElement().getPalo() == monto2.lastElement().getPalo()) {
+                if (monto1.lastElement().getNumeroCarta() == monto2.lastElement().getNumeroCarta() + 1) {
+                    mover = true;
+                } else if(monto1.lastElement().getNumeroCarta() == monto2.lastElement().getNumeroCarta() - 1) {
+                    mover = true;
+                }
+                else {
+                    mover = false;
+                }
+            }
         }
         return mover;
     }

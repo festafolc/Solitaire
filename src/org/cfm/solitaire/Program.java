@@ -7,6 +7,7 @@ import org.cfm.solitaire.models.Jugador;
 import org.cfm.solitaire.models.Mesa;
 
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Program {
     public static void main(String[] args) {
@@ -18,26 +19,34 @@ public class Program {
         Scanner sc = new Scanner(System.in);
 
         mesaClass.crearMesa(barajaClass);
-        mesaClass.mostrarMesa();
 
-        while(jugadorClass.movimientoPosible(mesaClass)) {
-            System.out.println("Pop and Push[1], Peek[2]");
-            int mover = sc.nextInt();
-            int fila = sc.nextInt();
-            int columna = sc.nextInt();
-            switch (mover) {
-                case 1:
-                    Carta cartaPop = cartaClass.seleccionarMonton(mesaClass, fila, columna).lastElement();
-                    fila = sc.nextInt();
-                    columna = sc.nextInt();
-                    cartaClass.seleccionarMonton(mesaClass, fila, columna).push(cartaPop);
-                case 2:
-                    Carta cartaPeek = cartaClass.seleccionarMonton(mesaClass, fila, columna).lastElement();
-                default:
-                    System.out.println("Seleccione una opción válida");
+        System.out.println("     _______.  ______    __       __  .___________.    ___       __  .______       _______ \n" +
+                "    /       | /  __  \\  |  |     |  | |           |   /   \\     |  | |   _  \\     |   ____|\n" +
+                "   |   (----`|  |  |  | |  |     |  | `---|  |----`  /  ^  \\    |  | |  |_)  |    |  |__   \n" +
+                "    \\   \\    |  |  |  | |  |     |  |     |  |      /  /_\\  \\   |  | |      /     |   __|  \n" +
+                ".----)   |   |  `--'  | |  `----.|  |     |  |     /  _____  \\  |  | |  |\\  \\----.|  |____ \n" +
+                "|_______/     \\______/  |_______||__|     |__|    /__/     \\__\\ |__| | _| `._____||_______|\n" +
+                "                                                                                           ");
+
+        while (jugadorClass.movimientoPosible(mesaClass)) {
+            mesaClass.mostrarMesa();
+            System.out.print("Seleccione la primera carta (zona arriba): ");
+            String[] carta = sc.next().split(",");
+            int fila = Integer.parseInt(carta[0]);
+            int columna = Integer.parseInt(carta[1]);
+            Stack<Carta> monto1 = cartaClass.seleccionarMonton(mesaClass, fila, columna);
+            System.out.print("Seleccione la segunda carta: ");
+            carta = sc.next().split(",");
+            fila = Integer.parseInt(carta[0]);
+            columna = Integer.parseInt(carta[1]);
+            Stack<Carta> monto2 = cartaClass.seleccionarMonton(mesaClass, fila, columna);
+            if (jugadorClass.comprobarMovimiento(mesaClass, monto1, monto2)) {
+                Carta cartaPop = monto1.pop();
+                monto2.push(cartaPop);
+            } else {
+                System.out.println("Movimiento erróneo");
             }
         }
-
         System.out.println("fin");
     }
 

@@ -33,13 +33,8 @@ public class Carta {
         this.palo = palo;
     }
 
-    public Stack<Carta> seleccionarCarta(Mesa mesa, int indice) {
-        Stack<Carta>[] cartas = mesa.getMontonExterior();
-        return cartas[indice];
-    }
-
     public Stack<Carta> seleccionarMonton(Mesa mesa, int fila, int columna) {
-        if(fila == 5) {
+        if(fila == 4) {
             Stack<Carta>[] cartas = mesa.getMontonExterior();
             return cartas[columna];
         } else {
