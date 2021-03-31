@@ -24,4 +24,4 @@ viene el 10). Si debajo de ella existiese una carta boca abajo se gira para hace
 - En la zona-interior se puede mover una carta sobre otra, siempre que la carta que se va a ocultar sea del
 mismo palo y una unidad mayor que la que se mueve (fíjate que encima del 10 se debe colocar un 7). Este
 movimiento tiene como objetivo hacer visible la carta que está debajo de la que se está moviendo.
-- No se puede mover una carta a un hueco vacío en la zona-interior.
+- Únicamente se puede mover una carta a un hueco vacío en la zona-interior si dicha carta es un 12 (rey).
