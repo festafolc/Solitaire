@@ -27,7 +27,7 @@ public class Baraja {
         return baraja;
     }
 
-    public List<Carta> barajarBaraja(List baraja) {
+    public List<Carta> barajarBaraja(List<Carta> baraja) {
         Random randomObj = new Random();
         List<Carta> cartasAleatorias = new ArrayList<>();
         int cartaAleatoria;
@@ -35,7 +35,7 @@ public class Baraja {
 
         for(int i = 0; i < 40; i++) {
             cartaAleatoria = randomObj.nextInt(40 - i);
-            carta = (Carta) baraja.get(cartaAleatoria);
+            carta = baraja.get(cartaAleatoria);
             cartasAleatorias.add(carta);
             baraja.remove(cartaAleatoria);
         }

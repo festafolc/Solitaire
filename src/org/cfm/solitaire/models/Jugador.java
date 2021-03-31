@@ -58,9 +58,7 @@ public class Jugador {
             }
         }
 
-
         //Verificar si una carta del interior puede ir al exterior
-
         for (int i = 1; i < cartasBastos.size(); i++) {
             int min = Math.min(cartasBastos.get(i - 1).getNumeroCarta(), cartasBastos.get(i).getNumeroCarta());
             if (min == 1) {
@@ -78,8 +76,7 @@ public class Jugador {
                         break;
                     }
                 }
-            } catch (NoSuchElementException e) {
-                continue;
+            } catch (NoSuchElementException ignored) {
             }
         }
         for (int i = 1; i < cartasCopas.size(); i++) {
@@ -99,8 +96,7 @@ public class Jugador {
                         break;
                     }
                 }
-            } catch (NoSuchElementException e) {
-                continue;
+            } catch (NoSuchElementException ignored) {
             }
         }
         for (int i = 1; i < cartasEspadas.size(); i++) {
@@ -120,8 +116,7 @@ public class Jugador {
                         break;
                     }
                 }
-            } catch (NoSuchElementException e) {
-                continue;
+            } catch (NoSuchElementException ignored) {
             }
         }
         for (int i = 1; i < cartasOros.size(); i++) {
@@ -141,19 +136,17 @@ public class Jugador {
                         break;
                     }
                 }
-            } catch (NoSuchElementException e) {
-                continue;
+            } catch (NoSuchElementException ignored) {
             }
         }
 
-
         //Verificar movimientos en el monto interior entre cartas
-        if (!movimiento) {
-            if (cartasBastos.size() > 1) {
-                for (int i = 0; i < cartasBastos.size(); i++) {
-                    if (i < cartasBastos.size() - 1) {
+        if(!movimiento) {
+            if(cartasBastos.size() > 1) {
+                for (int i = cartasBastos.size() -1; i > 0; i--) {
+                    for(int j = cartasBastos.size() - 2; j > 0; j--) {
                         int numero1 = cartasBastos.get(i).getNumeroCarta();
-                        int numero2 = cartasBastos.get(i + 1).getNumeroCarta();
+                        int numero2 = cartasBastos.get(j).getNumeroCarta();
                         if (Math.abs(numero1 - numero2) == 1) {
                             movimiento = true;
                             break;
@@ -161,11 +154,11 @@ public class Jugador {
                     }
                 }
             }
-            if (cartasCopas.size() > 1) {
-                for (int i = 0; i < cartasCopas.size(); i++) {
-                    if (i < cartasCopas.size() - 1) {
+            if(cartasCopas.size() > 1) {
+                for (int i = cartasCopas.size() -1; i > 0; i--) {
+                    for(int j = cartasCopas.size() - 2; j > 0; j--) {
                         int numero1 = cartasCopas.get(i).getNumeroCarta();
-                        int numero2 = cartasCopas.get(i + 1).getNumeroCarta();
+                        int numero2 = cartasCopas.get(j).getNumeroCarta();
                         if (Math.abs(numero1 - numero2) == 1) {
                             movimiento = true;
                             break;
@@ -173,11 +166,11 @@ public class Jugador {
                     }
                 }
             }
-            if (cartasEspadas.size() > 1) {
-                for (int i = 0; i < cartasEspadas.size(); i++) {
-                    if (i < cartasEspadas.size() - 1) {
+            if(cartasEspadas.size() > 1) {
+                for (int i = cartasEspadas.size() -1; i > 0; i--) {
+                    for(int j = cartasEspadas.size() - 2; j > 0; j--) {
                         int numero1 = cartasEspadas.get(i).getNumeroCarta();
-                        int numero2 = cartasEspadas.get(i + 1).getNumeroCarta();
+                        int numero2 = cartasEspadas.get(j).getNumeroCarta();
                         if (Math.abs(numero1 - numero2) == 1) {
                             movimiento = true;
                             break;
@@ -185,11 +178,11 @@ public class Jugador {
                     }
                 }
             }
-            if (cartasOros.size() > 1) {
-                for (int i = 0; i < cartasOros.size(); i++) {
-                    if (i < cartasOros.size() - 1) {
+            if(cartasOros.size() > 1) {
+                for (int i = cartasOros.size() -1; i > 0; i--) {
+                    for(int j = cartasOros.size() - 2; j > 0; j--) {
                         int numero1 = cartasOros.get(i).getNumeroCarta();
-                        int numero2 = cartasOros.get(i + 1).getNumeroCarta();
+                        int numero2 = cartasOros.get(j).getNumeroCarta();
                         if (Math.abs(numero1 - numero2) == 1) {
                             movimiento = true;
                             break;
@@ -282,5 +275,20 @@ public class Jugador {
             }
         }
         return mover;
+    }
+
+    public boolean finJuego(Mesa mesa) {
+        boolean fin = false;
+        Stack<Carta>[] mesaExterior = mesa.getMontonExterior();
+        int cartasTotal = 0;
+        for(Stack<Carta> stack : mesaExterior) {
+            if(stack.size() == 10) {
+                cartasTotal+=10;
+            }
+        }
+        if(cartasTotal == 40) {
+            fin = true;
+        }
+        return fin;
     }
 }

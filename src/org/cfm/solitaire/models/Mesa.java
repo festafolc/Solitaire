@@ -14,21 +14,12 @@ public class Mesa {
     public Mesa() {
     }
 
-
     public Stack<Carta>[][] getMontonInterior() {
         return montonInterior;
     }
 
-    public void setMontonInterior(Stack<Carta>[][] montonInterior) {
-        this.montonInterior = montonInterior;
-    }
-
     public Stack<Carta>[] getMontonExterior() {
         return montonExterior;
-    }
-
-    public void setMontonExterior(Stack<Carta>[] montonExterior) {
-        this.montonExterior = montonExterior;
     }
 
     public void crearMesa(Baraja baraja) {
@@ -68,20 +59,20 @@ public class Mesa {
 
     public void mostrarMesa() {
         System.out.println("...................................................................................");
-        for (int i = 0; i < montonInterior.length; i++) {
+        for (Stack<Carta>[] stacks : montonInterior) {
             int k = 0;
-            for (int j = 0; j < montonInterior[i].length; j++) {
+            for (Stack<Carta> stack : stacks) {
                 if (k != 3) {
-                    if(montonInterior[i][j].size() > 0) {
-                        System.out.print(montonInterior[i][j].lastElement() + "\t\t|\t\t");
+                    if (stack.size() > 0) {
+                        System.out.print(stack.lastElement() + "\t\t|\t\t");
                     } else {
-                        System.out.print(montonInterior[i][j] + "\t\t|\t\t");
+                        System.out.print(stack + "\t\t|\t\t");
                     }
                 } else {
-                    if(montonInterior[i][j].size() > 0) {
-                        System.out.print(montonInterior[i][j].lastElement() + "\n");
+                    if (stack.size() > 0) {
+                        System.out.print(stack.lastElement() + "\n");
                     } else {
-                        System.out.print(montonInterior[i][j] + "\n");
+                        System.out.print(stack + "\n");
                     }
                 }
                 k++;

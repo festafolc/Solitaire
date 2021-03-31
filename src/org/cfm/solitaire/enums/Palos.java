@@ -5,14 +5,4 @@ public enum Palos {
     BASTOS,
     COPAS,
     ESPADAS;
-
-
-    /*    int i;
-    Palos(int i){
-        this.i= i;
-    }
-
-    public int getI() {
-        return i;
-    }*/
 }

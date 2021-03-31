@@ -20,13 +20,13 @@ public class Program {
 
         mesaClass.crearMesa(barajaClass);
 
-        System.out.println("     _______.  ______    __       __  .___________.    ___       __  .______       _______ \n" +
-                "    /       | /  __  \\  |  |     |  | |           |   /   \\     |  | |   _  \\     |   ____|\n" +
-                "   |   (----`|  |  |  | |  |     |  | `---|  |----`  /  ^  \\    |  | |  |_)  |    |  |__   \n" +
-                "    \\   \\    |  |  |  | |  |     |  |     |  |      /  /_\\  \\   |  | |      /     |   __|  \n" +
-                ".----)   |   |  `--'  | |  `----.|  |     |  |     /  _____  \\  |  | |  |\\  \\----.|  |____ \n" +
-                "|_______/     \\______/  |_______||__|     |__|    /__/     \\__\\ |__| | _| `._____||_______|\n" +
-                "                                                                                           ");
+        System.out.println("     _______.  ______    __       __  .___________.    ___      .______       __    ______   \n" +
+                "    /       | /  __  \\  |  |     |  | |           |   /   \\     |   _  \\     |  |  /  __  \\  \n" +
+                "   |   (----`|  |  |  | |  |     |  | `---|  |----`  /  ^  \\    |  |_)  |    |  | |  |  |  | \n" +
+                "    \\   \\    |  |  |  | |  |     |  |     |  |      /  /_\\  \\   |      /     |  | |  |  |  | \n" +
+                ".----)   |   |  `--'  | |  `----.|  |     |  |     /  _____  \\  |  |\\  \\----.|  | |  `--'  | \n" +
+                "|_______/     \\______/  |_______||__|     |__|    /__/     \\__\\ | _| `._____||__|  \\______/  \n" +
+                "                                                                                             ");
 
         while (jugadorClass.movimientoPosible(mesaClass)) {
             mesaClass.mostrarMesa();
@@ -47,7 +47,10 @@ public class Program {
                 System.out.println("Movimiento erróneo");
             }
         }
-        System.out.println("fin");
-    }
 
+        if(jugadorClass.finJuego(mesaClass)) {
+            System.out.println("¡Felicidades has resuelto el solitario!");
+        }
+
+    }
 }

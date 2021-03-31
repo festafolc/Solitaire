@@ -21,20 +21,12 @@ public class Carta {
         return numeroCarta;
     }
 
-    public void setNumeroCarta(int numeroCarta) {
-        this.numeroCarta = numeroCarta;
-    }
-
     public Palos getPalo() {
         return palo;
     }
 
-    public void setPalo(Palos palo) {
-        this.palo = palo;
-    }
-
     public Stack<Carta> seleccionarMonton(Mesa mesa, int fila, int columna) {
-        if(fila == 4) {
+        if (fila == 4) {
             Stack<Carta>[] cartas = mesa.getMontonExterior();
             return cartas[columna];
         } else {
