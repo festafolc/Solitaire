@@ -25,3 +25,13 @@ viene el 10). Si debajo de ella existiese una carta boca abajo se gira para hace
 mismo palo y una unidad mayor que la que se mueve (fíjate que encima del 10 se debe colocar un 7). Este
 movimiento tiene como objetivo hacer visible la carta que está debajo de la que se está moviendo.
 - Únicamente se puede mover una carta a un hueco vacío en la zona-interior si dicha carta es un 12 (rey).
+
+## Final de una partida
+El juego continúa siempre que exista un movimiento posible, es decir, un movimiento de una carta a algún montón
+exterior o un movimiento dentro de la zona-interior. El juego puede finalizar con dos situaciones:
+i) Los montones exteriores contienen todas las cartas
+Los cuatro montones exteriores tienen 10 cartas del mismo palo ordenados de menor a mayor. Objetivo
+conseguido.
+ii) No hay más movimientos posibles y quedan cartas en la zona-interior
+Puede ocurrir que el solitario no finalice, quedan cartas en la zona-interior y no es posible ningún movimiento.
+Objetivo no conseguido
