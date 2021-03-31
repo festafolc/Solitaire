@@ -1,4 +1,4 @@
-package org.cfm.solitaire.enums;
+package org.cfm.solitario.enums;
 
 public enum Palos {
     OROS,

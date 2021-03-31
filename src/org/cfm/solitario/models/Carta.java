@@ -1,6 +1,6 @@
-package org.cfm.solitaire.models;
+package org.cfm.solitario.models;
 
-import org.cfm.solitaire.enums.Palos;
+import org.cfm.solitario.enums.Palos;
 
 import java.util.Stack;
 

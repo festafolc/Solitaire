@@ -1,4 +1,4 @@
-package org.cfm.solitaire.models;
+package org.cfm.solitario.models;
 
 import java.util.List;
 import java.util.Stack;

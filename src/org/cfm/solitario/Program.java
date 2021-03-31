@@ -1,10 +1,9 @@
-package org.cfm.solitaire;
+package org.cfm.solitario;
 
-import org.cfm.solitaire.enums.Palos;
-import org.cfm.solitaire.models.Baraja;
-import org.cfm.solitaire.models.Carta;
-import org.cfm.solitaire.models.Jugador;
-import org.cfm.solitaire.models.Mesa;
+import org.cfm.solitario.models.Baraja;
+import org.cfm.solitario.models.Carta;
+import org.cfm.solitario.models.Jugador;
+import org.cfm.solitario.models.Mesa;
 
 import java.util.Scanner;
 import java.util.Stack;
