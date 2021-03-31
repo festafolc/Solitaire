@@ -50,6 +50,8 @@ public class Program {
 
         if(jugadorClass.finJuego(mesaClass)) {
             System.out.println("¡Felicidades has resuelto el solitario!");
+        } else {
+            System.out.println("Inténtelo de nuevo");
         }
 
     }
