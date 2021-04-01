@@ -9,7 +9,7 @@ import java.util.Stack;
 
 public class Jugador {
 
-    public List<Palos> encontrarPalo(Mesa mesa) {
+    private List<Palos> encontrarPalo(Mesa mesa) {
         Stack<Carta>[] mesaExterior = mesa.getMontonExterior();
         List<Palos> palos = new ArrayList<>();
         for (Stack<Carta> palo : mesaExterior) {
@@ -20,13 +20,76 @@ public class Jugador {
         return palos;
     }
 
+    private boolean montonInteriorExterior(List<Carta> lista, Mesa mesa, boolean pilaVacia, Palos palo) {
+        Stack<Carta>[] mesaExterior = mesa.getMontonExterior();
+        boolean mover = false;
+
+        for (int i = 1; i < lista.size(); i++) {
+            int min = Math.min(lista.get(i - 1).getNumeroCarta(), lista.get(i).getNumeroCarta());
+            if (min == 1) {
+                mover = true;
+                break;
+            }
+            if (pilaVacia && (lista.get(i).getNumeroCarta() == 12)) {
+                mover = true;
+                break;
+            }
+            try {
+                if (mesaExterior[encontrarPalo(mesa).indexOf(palo)].size() > 0) {
+                    if (min == mesaExterior[encontrarPalo(mesa).indexOf(palo)].lastElement().getNumeroCarta() + 1) {
+                        mover = true;
+                        break;
+                    }
+                }
+            } catch (NoSuchElementException ignored) {
+            }
+        }
+        return mover;
+    }
+
+    private boolean montonInterior(List<Carta> lista) {
+        boolean mover = false;
+        if(lista.size() > 1) {
+            for (int i = 0; i < lista.size() -1; i++) {
+                int numero1 = lista.get(i).getNumeroCarta();
+                for(int j = i + 1; j < lista.size() - 2; j++) {
+                    int numero2 = lista.get(j).getNumeroCarta();
+                    if (Math.abs(numero1 - numero2) == 1) {
+                        mover = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return mover;
+    }
+
+    private boolean carta7y10(List<Carta> lista) {
+        boolean mover = false;
+        boolean numero7 = false;
+        boolean numero10 = false;
+        for(int i = 0; i < lista.size(); i++) {
+            if(lista.get(i).getNumeroCarta() == 7) {
+                numero7= true;
+            }
+            if(lista.get(i).getNumeroCarta() == 10) {
+                numero10= true;
+            }
+            if(numero7 && numero10) {
+                mover = true;
+                break;
+            }
+        }
+        return mover;
+    }
+
     public boolean movimientoPosible(Mesa mesa) {
 
         boolean movimiento = false;
         boolean pilaVacia = false;
 
         Stack<Carta>[][] mesaInterior = mesa.getMontonInterior();
-        Stack<Carta>[] mesaExterior = mesa.getMontonExterior();
+
         List<Carta> cartasInterior = new ArrayList<>();
         List<Carta> cartasBastos = new ArrayList<>();
         List<Carta> cartasCopas = new ArrayList<>();
@@ -42,6 +105,7 @@ public class Jugador {
                 }
             }
         }
+
 
         for (Carta cartaEncima : cartasInterior) {
             if (cartaEncima.getPalo() == Palos.BASTOS) {
@@ -59,190 +123,48 @@ public class Jugador {
         }
 
         //Verificar si una carta del interior puede ir al exterior
-        for (int i = 1; i < cartasBastos.size(); i++) {
-            int min = Math.min(cartasBastos.get(i - 1).getNumeroCarta(), cartasBastos.get(i).getNumeroCarta());
-            if (min == 1) {
-                movimiento = true;
-                break;
-            }
-            if (pilaVacia && (cartasBastos.get(i).getNumeroCarta() == 12)) {
-                movimiento = true;
-                break;
-            }
-            try {
-                if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.BASTOS)].size() > 0) {
-                    if (min == mesaExterior[encontrarPalo(mesa).indexOf(Palos.BASTOS)].lastElement().getNumeroCarta() + 1) {
-                        movimiento = true;
-                        break;
-                    }
-                }
-            } catch (NoSuchElementException ignored) {
-            }
+        if(montonInteriorExterior(cartasBastos, mesa, pilaVacia, Palos.BASTOS)) {
+            movimiento = true;
         }
-        for (int i = 1; i < cartasCopas.size(); i++) {
-            int min = Math.min(cartasCopas.get(i - 1).getNumeroCarta(), cartasCopas.get(i).getNumeroCarta());
-            if (min == 1) {
-                movimiento = true;
-                break;
-            }
-            if (pilaVacia && (cartasCopas.get(i).getNumeroCarta() == 12)) {
-                movimiento = true;
-                break;
-            }
-            try {
-                if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.COPAS)].size() > 0) {
-                    if (min == mesaExterior[encontrarPalo(mesa).indexOf(Palos.COPAS)].lastElement().getNumeroCarta() + 1) {
-                        movimiento = true;
-                        break;
-                    }
-                }
-            } catch (NoSuchElementException ignored) {
-            }
+        if(montonInteriorExterior(cartasCopas, mesa, pilaVacia, Palos.COPAS)) {
+            movimiento = true;
         }
-        for (int i = 1; i < cartasEspadas.size(); i++) {
-            int min = Math.min(cartasEspadas.get(i - 1).getNumeroCarta(), cartasEspadas.get(i).getNumeroCarta());
-            if (min == 1) {
-                movimiento = true;
-                break;
-            }
-            if (pilaVacia && (cartasEspadas.get(i).getNumeroCarta() == 12)) {
-                movimiento = true;
-                break;
-            }
-            try {
-                if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.ESPADAS)].size() > 0) {
-                    if (min == mesaExterior[encontrarPalo(mesa).indexOf(Palos.ESPADAS)].lastElement().getNumeroCarta() + 1) {
-                        movimiento = true;
-                        break;
-                    }
-                }
-            } catch (NoSuchElementException ignored) {
-            }
+        if(montonInteriorExterior(cartasEspadas, mesa, pilaVacia, Palos.ESPADAS)) {
+            movimiento = true;
         }
-        for (int i = 1; i < cartasOros.size(); i++) {
-            int min = Math.min(cartasOros.get(i - 1).getNumeroCarta(), cartasOros.get(i).getNumeroCarta());
-            if (min == 1) {
-                movimiento = true;
-                break;
-            }
-            if (pilaVacia && (cartasOros.get(i).getNumeroCarta() == 12)) {
-                movimiento = true;
-                break;
-            }
-            try {
-                if (mesaExterior[encontrarPalo(mesa).indexOf(Palos.OROS)].size() > 0) {
-                    if (min == mesaExterior[encontrarPalo(mesa).indexOf(Palos.OROS)].lastElement().getNumeroCarta() + 1) {
-                        movimiento = true;
-                        break;
-                    }
-                }
-            } catch (NoSuchElementException ignored) {
-            }
+        if(montonInteriorExterior(cartasOros, mesa, pilaVacia, Palos.OROS)) {
+            movimiento = true;
         }
 
         //Verificar movimientos en el monto interior entre cartas
         if(!movimiento) {
-            if(cartasBastos.size() > 1) {
-                for (int i = cartasBastos.size() -1; i > 0; i--) {
-                    for(int j = cartasBastos.size() - 2; j > 0; j--) {
-                        int numero1 = cartasBastos.get(i).getNumeroCarta();
-                        int numero2 = cartasBastos.get(j).getNumeroCarta();
-                        if (Math.abs(numero1 - numero2) == 1) {
-                            movimiento = true;
-                            break;
-                        }
-                    }
-                }
+            if(montonInterior(cartasBastos)) {
+                movimiento = true;
             }
-            if(cartasCopas.size() > 1) {
-                for (int i = cartasCopas.size() -1; i > 0; i--) {
-                    for(int j = cartasCopas.size() - 2; j > 0; j--) {
-                        int numero1 = cartasCopas.get(i).getNumeroCarta();
-                        int numero2 = cartasCopas.get(j).getNumeroCarta();
-                        if (Math.abs(numero1 - numero2) == 1) {
-                            movimiento = true;
-                            break;
-                        }
-                    }
-                }
+            if(montonInterior(cartasCopas)) {
+                movimiento = true;
             }
-            if(cartasEspadas.size() > 1) {
-                for (int i = cartasEspadas.size() -1; i > 0; i--) {
-                    for(int j = cartasEspadas.size() - 2; j > 0; j--) {
-                        int numero1 = cartasEspadas.get(i).getNumeroCarta();
-                        int numero2 = cartasEspadas.get(j).getNumeroCarta();
-                        if (Math.abs(numero1 - numero2) == 1) {
-                            movimiento = true;
-                            break;
-                        }
-                    }
-                }
+            if(montonInterior(cartasEspadas)) {
+                movimiento = true;
             }
-            if(cartasOros.size() > 1) {
-                for (int i = cartasOros.size() -1; i > 0; i--) {
-                    for(int j = cartasOros.size() - 2; j > 0; j--) {
-                        int numero1 = cartasOros.get(i).getNumeroCarta();
-                        int numero2 = cartasOros.get(j).getNumeroCarta();
-                        if (Math.abs(numero1 - numero2) == 1) {
-                            movimiento = true;
-                            break;
-                        }
-                    }
-                }
+            if(montonInterior(cartasOros)) {
+                movimiento = true;
             }
         }
 
         //Verificar movimientos entre los 7 y los 10 del mismo palo
-        boolean numero7 = false;
-        boolean numero10 = false;
         if(!movimiento) {
-            for(int i = 1; i < cartasBastos.size(); i++) {
-                if(cartasBastos.get(i).getNumeroCarta() == 7) {
-                    numero7= true;
-                }
-                if(cartasBastos.get(i).getNumeroCarta() == 10) {
-                    numero10= true;
-                }
-                if(numero7 && numero10) {
-                    movimiento = true;
-                    break;
-                }
+            if(carta7y10(cartasBastos)) {
+                movimiento = true;
             }
-            for(int i = 1; i < cartasCopas.size(); i++) {
-                if(cartasCopas.get(i).getNumeroCarta() == 7) {
-                    numero7= true;
-                }
-                if(cartasCopas.get(i).getNumeroCarta() == 10) {
-                    numero10= true;
-                }
-                if(numero7 && numero10) {
-                    movimiento = true;
-                    break;
-                }
+            if(carta7y10(cartasCopas)) {
+                movimiento = true;
             }
-            for(int i = 1; i < cartasEspadas.size(); i++) {
-                if(cartasEspadas.get(i).getNumeroCarta() == 7) {
-                    numero7= true;
-                }
-                if(cartasEspadas.get(i).getNumeroCarta() == 10) {
-                    numero10= true;
-                }
-                if(numero7 && numero10) {
-                    movimiento = true;
-                    break;
-                }
+            if(carta7y10(cartasEspadas)) {
+                movimiento = true;
             }
-            for(int i = 1; i < cartasOros.size(); i++) {
-                if(cartasOros.get(i).getNumeroCarta() == 7) {
-                    numero7= true;
-                }
-                if(cartasOros.get(i).getNumeroCarta() == 10) {
-                    numero10= true;
-                }
-                if(numero7 && numero10) {
-                    movimiento = true;
-                    break;
-                }
+            if(carta7y10(cartasOros)) {
+                movimiento = true;
             }
         }
         return (movimiento);
